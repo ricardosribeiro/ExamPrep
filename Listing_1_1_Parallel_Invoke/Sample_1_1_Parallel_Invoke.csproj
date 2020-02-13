@@ -1,0 +1,10 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AssemblyName>1_1_Parallel_Invoke</AssemblyName>
+    <RootNamespace>1_1_Parallel_Invoke</RootNamespace>
+  </PropertyGroup>
+
+</Project>
