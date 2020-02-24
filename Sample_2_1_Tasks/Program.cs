@@ -14,8 +14,12 @@ namespace Sample_2_1_Tasks
             Console.WriteLine("Return a value from a task");
             TaskReturnValue();
 
+            Console.WriteLine("Run a rask using AwaitAll");
+            AwaitAll();
+
             Console.WriteLine("Finished processing. Press any key to end");
             Console.ReadKey();
+
         }
 
         /// <summary>
@@ -38,7 +42,7 @@ namespace Sample_2_1_Tasks
         }
 
         /// <summary>
-        /// 
+        /// A Task can be created that wil return a value.
         /// </summary>
         public static void TaskReturnValue()
         {
@@ -48,11 +52,37 @@ namespace Sample_2_1_Tasks
             Console.WriteLine($"The task result is: {task.Result}");
         }
 
+        /// <summary>
+        /// The Task.AwaitAll method can be used to pause a program until a number of tasks
+        /// have completed. This sample illustrates a additional issue with the use of the loop control variables.
+        /// The loop counter is copied into a local variable called taskNum. If the variable i was used directly
+        /// in the lambada expression, all of the tasks would have number 10.
+        /// </summary>
+        public static void AwaitAll()
+        {
+            Task[] tasks = new Task[10];
+
+            for (int i = 0; i < 10; i++)
+            {
+                int taskNum = i;
+                tasks[i] = Task.Run(() => DoWork(taskNum));
+            }
+            Task.WaitAll(tasks);
+        }
+
         public static void DoWork()
         {
             Console.WriteLine("Work starting");
             Thread.Sleep(2000);
-            Console.WriteLine("Wotk finished");
+            Console.WriteLine($"Work finished");
+        }
+
+        public static void DoWork(int i)
+        {
+            Console.WriteLine($"Work {i} starting");
+            Thread.Sleep(2000);
+            Console.WriteLine($"Work {i} finished");
+
         }
 
         public static int CalculateResult()
