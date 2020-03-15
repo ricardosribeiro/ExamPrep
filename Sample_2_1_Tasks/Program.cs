@@ -17,6 +17,9 @@ namespace Sample_2_1_Tasks
             Console.WriteLine("Run a rask using AwaitAll");
             AwaitAll();
 
+            Console.WriteLine("Continuation task sample");
+            ContinuationTask();
+
             Console.WriteLine("Finished processing. Press any key to end");
             Console.ReadKey();
 
@@ -69,6 +72,24 @@ namespace Sample_2_1_Tasks
             }
             Task.WaitAll(tasks);
         }
+        
+        public static void ContinuationTaskOptions()
+        {
+            Task task = Task.Run(()=>One());
+            task.ContinueWith()
+        }
+
+        ///<sumary>
+        ///A continuation task can be nominated to start when existing task (the antecedent task) finishes.
+        ///If the antecedent task produces a result, it can be supplied as an input to the continuation task.
+        ///Continuation tasks can be used to create a "pipeline" of operations.
+        ///</sumary>
+        public static void ContinuationTask()
+        {
+            Task task = Task.Run(() => One())
+                .ContinueWith((One)=> Two())
+                .ContinueWith((Two)=>Three());
+        }
 
         public static void DoWork()
         {
@@ -92,5 +113,23 @@ namespace Sample_2_1_Tasks
             Console.WriteLine("Work finished");
             return 99;
         }
+
+        public static void One()
+        {
+            Console.WriteLine("Hello ");
+            Thread.Sleep(1000);
+        }
+        public static void Two()
+        {
+            Console.WriteLine("Cruel ");
+            Thread.Sleep(1000);
+
+        }
+        public static void Three()
+        {
+            Console.WriteLine("World");
+            Thread.Sleep(1000);
+        }
+
     }
 }
